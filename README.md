@@ -2,127 +2,246 @@
 
 -----------------
 
-BusTub is a relational database management system built at [Carnegie Mellon University](https://db.cs.cmu.edu) for the [Introduction to Database Systems](https://15445.courses.cs.cmu.edu) (15-445/645) course. This system was developed for educational purposes and should not be used in production environments. This fork is for use in the CSCI 5817: Database Systems course at the [University of Colorado Boulder](https://www.colorado.edu/cs/).
+# BusTub for CSCI 5817 Database Systems
 
-**WARNING: IF YOU ARE A STUDENT IN THE CLASS, DO NOT DIRECTLY FORK THIS REPO. DO NOT PUSH PROJECT SOLUTIONS PUBLICLY. THIS IS AN ACADEMIC INTEGRITY VIOLATION.**
+BusTub is an educational relational database management system originally
+developed at Carnegie Mellon University.
 
-## Cloning this repo
+This repository is the version used for CSCI 5817: Database Systems at the
+University of Colorado Boulder.
 
-The following instructions will create a private BusTub that you can use for your development:
+## Important Course Repository Rules
 
-1. Go to [https://github.com/new](https://github.com/new) to create a new repo under your account. Pick a name (e.g. `private-bustub`) and make sure it is you select it as **private**.
-2. On your development machine, clone the public BusTub:
-   ```
-   $ git clone https://github.com/asaashraf/bustub.git public-bustub
-   ```
-3. You next need to [mirror](https://git-scm.com/docs/git-push#Documentation/git-push.txt---mirror) the public BusTub repo into your own private BusTub repo. Suppose your GitHub name is `student` and your repo name is `private-bustub`, you will execute the following commands:
-   ```
-   $ cd public-bustub
-   $ git push --mirror git@github.com:student/private-bustub.git
-   Note: You can set up an ssh key via the command ssh-keygen -t rsa -b 4096 -C "youremail@email.com" and then paste the resulting key into GitHub under the Settings menu.
-         Go to following web page if you need detailed instructions on how to generate an SSH key and add it to your GitHub account: https://bit.ly/3mPSRVd
-   ```
-   This copies everything in the public BusTub repo into your own private repo. You can now delete this bustub directory:
-   ```
-   $ cd ..
-   $ rm -rv public-bustub
-   ```
-4. Clone your own private repo on:
-   ```
-   $ git clone git@github.com:student/private-bustub.git
-   ```
-5. Add the public BusTub as a remote source. This will allow you to retrieve changes from the aashraf bustub repository during the semester:
-   ```
-   $ git remote add public https://github.com/asaashraf/bustub.git
-   ```
-6. You can now pull in changes from the public BusTub as needed:
-   ```
-   $ git pull public master
-   ```
+Students in CSCI 5817 must use this repository as the source repository for
+course projects:
 
-We suggest working on your projects in separate branches. If you do not understand how Git branches work, [learn how](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging). If you fail to do this, you might lose all your work at some point in the semester, and nobody will be able to help you.
+https://github.com/asaashraf/bustub
 
-## Build
+Do NOT use the current Carnegie Mellon BusTub repository for your course work.
 
-### Linux / Mac
-To ensure that you have the proper packages on your machine, run the following script to automatically install them:
+Do NOT:
+- fork this public repository directly for your project work
+- create a public repository containing your project solutions
+- push your work to this public repository
+- push your work to the Carnegie Mellon BusTub repository
+- open pull requests or issues against the Carnegie Mellon BusTub repository
+  related to this course
+- share your project code with other students
 
-```
-$ sudo build_support/packages.sh
-```
+Your project repository must remain PRIVATE.
 
-Then run the following commands to build the system:
+Do not remove the LICENSE file or existing attribution from the repository.
 
-```
-$ mkdir build
-$ cd build
-$ cmake ..
-$ make
-```
+---
 
-If you want to compile the system in debug mode, pass in the following flag to cmake:
-Debug mode:
+# Creating Your Private Repository
 
-```
-$ cmake -DCMAKE_BUILD_TYPE=Debug ..
-$ make
-```
-This enables [AddressSanitizer](https://github.com/google/sanitizers), which can generate false positives for overflow on STL containers. If you encounter this, define the environment variable `ASAN_OPTIONS=detect_container_overflow=0`.
+You will create a private copy of the CSCI 5817 BusTub repository under your
+own GitHub account.
 
-### Windows
-If you are using Windows 10, you can use the Windows Subsystem for Linux (WSL) to develop, build, and test Bustub. All you need is to [Install WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10). You can just choose "Ubuntu" (no specific version) in Microsoft Store. Then, enter WSL and follow the above instructions.
+## 1. Create an empty private GitHub repository
 
-If you are using CLion, it also [works with WSL](https://blog.jetbrains.com/clion/2018/01/clion-and-linux-toolchain-on-windows-are-now-friends).
+Go to:
 
-## Testing
-```
-$ cd build
-$ make check-tests
-```
+https://github.com/new
 
-## Build environment
+Create a new repository under your GitHub account.
 
-If you have trouble getting cmake or make to run, an easy solution is to create a virtual container to build in. There are two options available:
+For example:
 
-### Vagrant
-First, make sure you have Vagrant and Virtualbox installed
-```
-$ sudo apt update
-$ sudo apt install vagrant virtualbox
-```
+    private-bustub
 
-From the repository directory, run this command to create and start a Vagrant box:
+Make sure the repository is set to **Private**.
 
-```
-$ vagrant up
-```
+Do not initialize the repository with a README, .gitignore, or license.
 
-This will start a Vagrant box running Ubuntu 20.02 in the background with all the packages needed. To access it, type
+## 2. Create a temporary bare copy of the course repository
 
-```
-$ vagrant ssh
-```
+From a terminal:
 
-to open a shell within the box. You can find Bustub's code mounted at `/bustub` and run the commands mentioned above like normal.
+    git clone --bare https://github.com/asaashraf/bustub.git
 
-### Docker
-First, make sure that you have docker installed:
-```
-$ sudo apt update
-$ sudo apt install docker
-```
+This creates a temporary directory named:
 
-From the repository directory, run these commands to create a Docker image and container:
+    bustub.git
 
-```
-$ docker build . -t bustub
-$ docker create -t -i --name bustub -v $(pwd):/bustub bustub bash
-```
+## 3. Copy it into your private repository
 
-This will create a Docker image and container. To run it, type:
+Replace `YOUR_GITHUB_USERNAME` and `private-bustub` with your information:
 
-```
-$ docker start -a -i bustub
-```
+    cd bustub.git
+    git push --mirror git@github.com:YOUR_GITHUB_USERNAME/private-bustub.git
 
-to open a shell within the box. You can find Bustub's code mounted at `/bustub` and run the commands mentioned above like normal.
+After the push completes, remove the temporary copy:
+
+    cd ..
+    rm -rf bustub.git
+
+## 4. Clone your private repository
+
+Now clone the private repository that you just created:
+
+    git clone git@github.com:YOUR_GITHUB_USERNAME/private-bustub.git
+    cd private-bustub
+
+All of your project work should be completed in this private repository.
+
+---
+
+# GitHub SSH Setup
+
+If GitHub SSH access is already working on your computer, you can skip this
+section.
+
+GitHub's current recommended SSH key type is Ed25519:
+
+    ssh-keygen -t ed25519 -C "your_email@example.com"
+
+Follow GitHub's official SSH setup instructions if needed:
+
+https://docs.github.com/en/authentication/connecting-to-github-with-ssh
+
+After configuring SSH, you can verify your connection with:
+
+    ssh -T git@github.com
+
+---
+
+# Course Repository Remote
+
+After cloning your private repository, add the CSCI 5817 public repository as
+a remote named `course`:
+
+    git remote add course https://github.com/asaashraf/bustub.git
+
+You can verify your remotes with:
+
+    git remote -v
+
+You should see your private GitHub repository as `origin` and the CSCI 5817
+repository as `course`.
+
+If the instructor announces an update to the course repository, retrieve it
+with:
+
+    git fetch course
+
+Follow the instructor's directions for merging any course updates into your
+work.
+
+Do not add the Carnegie Mellon BusTub repository as a remote.
+
+---
+
+# Development Environment
+
+Use the development environment specified in the CSCI 5817 course setup
+instructions.
+
+The course setup guide is the authoritative source for supported operating
+systems, compilers, CMake, Visual Studio Code, and other development tools.
+
+Do not assume that setup instructions from newer versions of BusTub found
+online apply to this course repository.
+
+---
+
+# Building BusTub
+
+From the repository root:
+
+    mkdir build
+    cd build
+    cmake ..
+    make
+
+To create a Debug build:
+
+    mkdir build
+    cd build
+    cmake -DCMAKE_BUILD_TYPE=Debug ..
+    make
+
+If the `build` directory already exists, you do not need to create it again.
+
+---
+
+# Running Tests
+
+From inside the `build` directory, all enabled tests can be run with:
+
+    make check-tests
+
+Individual project tests can also be compiled and executed separately.
+
+For example:
+
+    make lru_replacer_test
+    ./test/lru_replacer_test
+
+and:
+
+    make buffer_pool_manager_test
+    ./test/buffer_pool_manager_test
+
+The provided tests are not necessarily all of the tests that will be used for
+grading. You should test your own implementation thoroughly.
+
+---
+
+# Code Formatting and Static Analysis
+
+Before submitting your project, run the formatting and code-quality checks
+specified in the project instructions.
+
+From the `build` directory:
+
+    make format
+    make check-lint
+    make check-clang-tidy
+
+Your code must compile and conform to the course formatting and style
+requirements.
+
+---
+
+# Project Work
+
+Do not change public method signatures unless the project instructions
+explicitly tell you to do so.
+
+Do not remove required class members or replace provided course infrastructure.
+
+You may add helper methods or additional private data members when permitted
+by the individual project specification.
+
+Always follow the requirements in the project document provided through the
+course shell.
+
+---
+
+# Academic Integrity
+
+All programming projects must be completed individually unless the instructor
+explicitly states otherwise.
+
+Do not share project code with other students.
+
+Do not publish completed project code in a public GitHub repository or any
+other publicly accessible location.
+
+See the CSCI 5817 syllabus for the complete collaboration and academic
+integrity policies.
+
+---
+
+# Attribution
+
+BusTub was originally developed at Carnegie Mellon University for educational
+use.
+
+This repository contains the course version used for CSCI 5817 at the
+University of Colorado Boulder.
+
+See the LICENSE file included with this repository for applicable licensing
+information.
