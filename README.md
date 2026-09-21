@@ -41,17 +41,13 @@ own GitHub account.
 
 ## 1. Create an empty private GitHub repository
 
-Go to:
-
-https://github.com/new
-
 Create a new repository under your GitHub account.
 
 For example:
 
     private-bustub
 
-Make sure the repository is set to **Private**.
+Make sure the repository is set to **Private**. Remember, you are not allowed to make this repo public at any time during or after this course.
 
 Do not initialize the repository with a README, .gitignore, or license.
 
