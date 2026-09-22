@@ -20,6 +20,7 @@ https://github.com/asaashraf/bustub
 Do NOT use the current Carnegie Mellon BusTub repository for your course work.
 
 Do NOT:
+
 - fork this public repository directly for your project work
 - create a public repository containing your project solutions
 - push your work to this public repository
@@ -28,7 +29,7 @@ Do NOT:
   related to this course
 - share your project code with other students
 
-Your project repository must remain PRIVATE.
+Your project repository must remain **PRIVATE**.
 
 Do not remove the LICENSE file or existing attribution from the repository.
 
@@ -39,7 +40,10 @@ Do not remove the LICENSE file or existing attribution from the repository.
 You will create a private copy of the CSCI 5817 BusTub repository under your
 own GitHub account.
 
-## 1. Create an empty private GitHub repository
+Before continuing, make sure GitHub SSH access is configured on your computer.
+If it is not, complete the **GitHub SSH Setup** section below first.
+
+## 1. Create an Empty Private GitHub Repository
 
 Create a new repository under your GitHub account.
 
@@ -47,11 +51,14 @@ For example:
 
     private-bustub
 
-Make sure the repository is set to **Private**. Remember, you are not allowed to make this repo public at any time during or after this course.
+Make sure the repository is set to **Private**.
 
-Do not initialize the repository with a README, .gitignore, or license.
+You are not allowed to make this repository public at any time during or after
+this course.
 
-## 2. Create a temporary bare copy of the course repository
+Do not initialize the repository with a README, `.gitignore`, or license.
+
+## 2. Create a Temporary Bare Copy of the Course Repository
 
 From a terminal:
 
@@ -61,19 +68,20 @@ This creates a temporary directory named:
 
     bustub.git
 
-## 3. Copy it into your private repository
+## 3. Copy It Into Your Private Repository
 
 Replace `YOUR_GITHUB_USERNAME` and `private-bustub` with your information:
 
     cd bustub.git
     git push --mirror git@github.com:YOUR_GITHUB_USERNAME/private-bustub.git
 
-After the push completes, remove the temporary copy:
+After the push completes, return to the parent directory and remove the
+temporary copy:
 
     cd ..
     rm -rf bustub.git
 
-## 4. Clone your private repository
+## 4. Clone Your Private Repository
 
 Now clone the private repository that you just created:
 
@@ -89,7 +97,7 @@ All of your project work should be completed in this private repository.
 If GitHub SSH access is already working on your computer, you can skip this
 section.
 
-GitHub's current recommended SSH key type is Ed25519:
+GitHub's recommended SSH key type is Ed25519:
 
     ssh-keygen -t ed25519 -C "your_email@example.com"
 
@@ -97,7 +105,7 @@ Follow GitHub's official SSH setup instructions if needed:
 
 https://docs.github.com/en/authentication/connecting-to-github-with-ssh
 
-After configuring SSH, you can verify your connection with:
+After configuring SSH, verify your connection with:
 
     ssh -T git@github.com
 
@@ -110,15 +118,15 @@ a remote named `course`:
 
     git remote add course https://github.com/asaashraf/bustub.git
 
-You can verify your remotes with:
+Verify your remotes with:
 
     git remote -v
 
 You should see your private GitHub repository as `origin` and the CSCI 5817
 repository as `course`.
 
-If the instructor announces an update to the course repository, retrieve it
-with:
+If the instructor announces an update to the course repository, retrieve the
+latest course changes with:
 
     git fetch course
 
@@ -144,44 +152,61 @@ online apply to this course repository.
 
 # Building BusTub
 
-From the repository root:
+All commands in this section should be run from the root of your private
+BusTub repository.
 
-    mkdir build
-    cd build
-    cmake ..
-    make
+Configure the project in Debug mode:
 
-To create a Debug build:
+    cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
 
-    mkdir build
-    cd build
-    cmake -DCMAKE_BUILD_TYPE=Debug ..
-    make
+Compile the project:
 
-If the `build` directory already exists, you do not need to create it again.
+    cmake --build build
+
+The `build` directory will be created automatically if it does not already
+exist.
+
+If you later change CMake configuration files or need to reconfigure the
+project, you can run the configuration command again:
+
+    cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
 
 ---
 
 # Running Tests
 
-From inside the `build` directory, all enabled tests can be run with:
+All commands in this section should be run from the root of your private
+BusTub repository.
 
-    make check-tests
+To compile and run all enabled tests:
+
+    cmake --build build --target check-tests
 
 Individual project tests can also be compiled and executed separately.
 
-For example:
+## LRU Replacer Test
 
-    make lru_replacer_test
-    ./test/lru_replacer_test
+Compile the test:
 
-and:
+    cmake --build build --target lru_replacer_test
 
-    make buffer_pool_manager_test
-    ./test/buffer_pool_manager_test
+Run the test:
 
-The provided tests are not necessarily all of the tests that will be used for
-grading. You should test your own implementation thoroughly.
+    ./build/test/lru_replacer_test
+
+## Buffer Pool Manager Test
+
+Compile the test:
+
+    cmake --build build --target buffer_pool_manager_test
+
+Run the test:
+
+    ./build/test/buffer_pool_manager_test
+
+The provided tests are only a subset of the tests that may be used for
+grading. You should write and run additional tests to verify the complete
+functionality of your implementation.
 
 ---
 
@@ -190,11 +215,19 @@ grading. You should test your own implementation thoroughly.
 Before submitting your project, run the formatting and code-quality checks
 specified in the project instructions.
 
-From the `build` directory:
+All commands should be run from the root of your private BusTub repository.
 
-    make format
-    make check-lint
-    make check-clang-tidy
+Format your code:
+
+    cmake --build build --target format
+
+Run the lint checks:
+
+    cmake --build build --target check-lint
+
+Run clang-tidy:
+
+    cmake --build build --target check-clang-tidy
 
 Your code must compile and conform to the course formatting and style
 requirements.
@@ -206,13 +239,18 @@ requirements.
 Do not change public method signatures unless the project instructions
 explicitly tell you to do so.
 
-Do not remove required class members or replace provided course infrastructure.
+Do not remove required class members or replace provided course
+infrastructure.
 
 You may add helper methods or additional private data members when permitted
 by the individual project specification.
 
 Always follow the requirements in the project document provided through the
 course shell.
+
+The version of BusTub used in this course is intentionally based on an older
+course codebase. Do not attempt to update it to match newer versions of BusTub
+found online.
 
 ---
 
@@ -225,6 +263,8 @@ Do not share project code with other students.
 
 Do not publish completed project code in a public GitHub repository or any
 other publicly accessible location.
+
+Your private repository must remain private during and after the course.
 
 See the CSCI 5817 syllabus for the complete collaboration and academic
 integrity policies.
